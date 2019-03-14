@@ -9,7 +9,7 @@
         <li *ngIf="isLoged" class="nav-item only-xs">
           <div class="user-container row mg-0">
             <div class="user-name">
-              <!-- {{ accountInfo.accountName }} -->
+              {{ userInfo ? userInfo.displayName : '' }}
             </div>
           </div>
         </li>
@@ -25,8 +25,13 @@
             class="user-button btn"
             ngbDropdownToggle>
             <div class="user-container row mg-0">
+              <div class="avatar">
+                <img
+                  onError="this.src = 'assets/images/blank-profile.png'"
+                  src="{{ userInfo ? userInfo.photoURL : 'assets/images/blank-profile.png' }}">
+              </div>
               <div class="user-name">
-                <!-- {{ accountInfo.accountName }} -->
+                {{ userInfo ? userInfo.displayName : '' }}
               </div>
             </div>
           </button>

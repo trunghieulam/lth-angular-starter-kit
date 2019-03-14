@@ -1,10 +1,13 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
-import { map } from 'rxjs/operators';
 import { Credentials } from 'src/app/model/credentials';
-import { AccountKit, AuthResponse } from 'ng2-account-kit';
 import { ToastrService } from 'ngx-toastr';
+import { AngularFireAuth } from '@angular/fire/auth';
+import { auth } from 'firebase/app';
+import { Logger } from '../logger.service';
+
+const log = new Logger('AuthenticationService');
 
 export interface AccessToken {
   token: any;
@@ -29,15 +32,25 @@ const credentialsKey = 'credentials';
  */
 @Injectable()
 export class AuthenticationService {
-  private _credentials: Credentials | null;
+  private _credentials: auth.OAuthCredential | Credentials | null;
 
   constructor(
-    private clientService: HttpClient,
     private toastr: ToastrService,
+    public afAuth: AngularFireAuth
   ) {
     const savedCredentials = sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey);
     if (savedCredentials) {
       this._credentials = JSON.parse(savedCredentials);
+      this.afAuth.auth.signInAndRetrieveDataWithCredential(auth.GoogleAuthProvider.credential(
+        this._credentials.idToken,
+        this._credentials.accessToken
+      )).then(
+        () => {
+        }, reason => {
+          log.debug(reason);
+          this.setCredentials();
+        }
+      );
     }
   }
 
@@ -47,21 +60,12 @@ export class AuthenticationService {
    * @return {Observable<Credentials>} The user credentials.
    */
   login() {
-    let formLogin = new FormData();
-    AccountKit.login('PHONE', { countryCode: '+84', phoneNumber: '' }).then(
-      (response: AuthResponse) => {
-        formLogin.append('authCode', response.code);
-        formLogin.append('password', '123456');
-        // this.clientService.post('/auth/login', formLogin).pipe(
-        //   map((response: any) => {
-        //     this.setCredentials(response, true);
-        //     this.toastr.success(`Welcome `, "Success Login");
-        //     return response;
-        //   })
-        // ).subscribe();
-      },
-      () => {
-        this.toastr.error("Please login to continue", "Login Error!");
+    this.afAuth.auth.signInWithPopup(new auth.GoogleAuthProvider()).then(
+      result => {
+        this.toastr.success("Login success!", "Authentication");
+        this.setCredentials(result.credential, true);
+      }, reason => {
+        log.debug(reason);
       }
     );
   }
@@ -71,6 +75,7 @@ export class AuthenticationService {
    * @return {Observable<boolean>} True if the user was logged out successfully.
    */
   logout(): Observable<boolean> {
+    this.afAuth.auth.signOut();
     // Customize credentials invalidation here
     this.setCredentials();
     return of(true);
@@ -88,7 +93,7 @@ export class AuthenticationService {
    * Gets the user credentials.
    * @return {Credentials} The user credentials or null if the user is not authenticated.
    */
-  get credentials(): Credentials | null {
+  get credentials(): Credentials | auth.AuthCredential | null {
     return this._credentials;
   }
 
@@ -99,7 +104,7 @@ export class AuthenticationService {
    * @param {Credentials=} credentials The user credentials.
    * @param {boolean=} remember True to remember credentials across sessions.
    */
-  private setCredentials(credentials?: Credentials, remember?: boolean) {
+  private setCredentials(credentials?: Credentials | auth.AuthCredential, remember?: boolean) {
     this._credentials = credentials || null;
     if (credentials) {
       const storage = remember ? localStorage : sessionStorage;

@@ -23,7 +23,7 @@ export class ApiAuthorizationInterceptor implements HttpInterceptor {
     }
 
     let authorizationHeader = new HttpHeaders({
-      Authorization: `Bearer ${this._credentials.token}`
+      Authorization: `Bearer ${this._credentials.accessToken}`
     });
 
     // Add Authorization Header

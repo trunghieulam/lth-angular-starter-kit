@@ -1,8 +1,7 @@
 export class Credentials {
-  countryPrefix: string;
-  expire: string;
-  id: number;
-  isNew: boolean;
-  phone: string;
-  token: string;
+  a: string;
+  accessToken: string;
+  idToken: string;
+  providerId: string;
+  signInMethod: string;
 }

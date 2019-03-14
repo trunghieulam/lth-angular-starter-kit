@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from '../core';
 import { Router } from '@angular/router';
+import { UserService } from '../services/user.service';
+import { UserInfo } from 'firebase/app';
 
 @Component({
   selector: 'app-header',
@@ -9,11 +11,16 @@ import { Router } from '@angular/router';
 })
 export class HeaderComponent implements OnInit {
   isCollapsed: boolean = true;
+  userInfo: UserInfo;
 
   constructor(
     private router: Router,
     private authenticationService: AuthenticationService,
+    private userService: UserService
   ) {
+    this.userService.userInfo.subscribe(
+      userInfo => this.userInfo = userInfo
+    );
   }
 
   ngOnInit() {
@@ -25,7 +32,7 @@ export class HeaderComponent implements OnInit {
 
   logout() {
     this.authenticationService.logout().subscribe();
-    this.handleUnauthenticatedUrl();
+    // this.handleUnauthenticatedUrl();
   }
 
   handleUnauthenticatedUrl() {

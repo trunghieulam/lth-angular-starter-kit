@@ -6,12 +6,11 @@
   <base href="/">
 
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- <link rel="icon" type="image/x-icon" href="assets/images/elott-logo.png"> -->
+  <!-- <link rel="icon" type="image/x-icon" href="__logo__"> -->
 
   <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
   <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
-  <script src="https://sdk.accountkit.com/en_US/sdk.js"></script>
 
   <meta name="description" content="__description__">
   <meta name="author" content="__author__">
@@ -36,20 +35,6 @@
   <!-- <meta name="twitter:image" content="__logo__"> -->
 </head>
 <body>
-  <script>
-    AccountKit_OnInteractive = function(){
-      AccountKit.init(
-        {
-          appId: "298635490806148",
-          state: "csrf",
-          version: "v3.1",
-          fbAppEventsEnabled:true,
-          redirect: "locahost:4200"
-        }
-      );
-    }
-  </script>
-
   <app-root></app-root>
 </body>
 </html>

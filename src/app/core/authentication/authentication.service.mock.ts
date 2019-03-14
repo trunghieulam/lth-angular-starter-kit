@@ -5,22 +5,20 @@ import { Credentials } from 'src/app/model/credentials';
 
 export class MockAuthenticationService {
   credentials: Credentials | null = {
-    expire: 'test',
-    token: '123',
-    countryPrefix: '',
-    isNew: true,
-    id: 1,
-    phone: ''
+    a: 'string',
+    accessToken: '123',
+    idToken: 'number',
+    providerId: 'google.com',
+    signInMethod: 'google.com'
   };
 
   login(context: LoginContext): Observable<Credentials> {
     return of({
-      expire: 'test',
-      token: '123',
-      countryPrefix: '',
-      isNew: true,
-      id: 1,
-      phone: ''
+      a: 'string',
+      accessToken: '123',
+      idToken: 'number',
+      providerId: 'google.com',
+      signInMethod: 'google.com'
     });
   }
 
