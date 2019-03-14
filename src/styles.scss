@@ -1,0 +1,96 @@
+/* You can add global styles to this file, and also import other style files */
+@import '@angular/material/prebuilt-themes/indigo-pink.css';
+@import '~ngx-toastr/toastr.css';
+
+.toast-success {
+  opacity: 1;
+}
+
+.toast-error {
+  opacity: 1;
+}
+
+.mg-0 {
+  margin: 0;
+}
+
+.pd-0 {
+  padding: 0;
+}
+
+.bl-80 {
+  width: 80%;
+  margin: 10px auto;
+  border-bottom: rgba(0, 0, 0, .3) 2px solid;
+}
+
+.spacing-05 {
+  width: 100%;
+  height: .5rem;
+}
+
+.btn:focus {
+  box-shadow: none !important;
+}
+
+.spacing-1 {
+  width: 100%;
+  height: 1rem;
+}
+
+.spacing-2 {
+  width: 100%;
+  height: 2rem;
+}
+
+.spacing-3 {
+  width: 100%;
+  height: 3rem;
+}
+
+.break-line {
+  height: 1px;
+  background-color: rgba(0, 0, 0, .1);
+  width: 90%;
+  margin: 10px auto;
+}
+
+.break-block-left {
+  height: 100%;
+  width: 1px;
+  position: absolute;
+  left: 0;
+  top: 0;
+  background: linear-gradient(white,black,white);
+}
+
+.break-block-right {
+  height: 100%;
+  width: 1px;
+  position: absolute;
+  right: 0;
+  top: 0;
+  background: linear-gradient(white,black,white);
+}
+
+.only-xs {
+  display: none;
+}
+
+.flex-end {
+  justify-content: flex-end;
+}
+
+html, body { height: 100%; }
+
+body { margin: 0; font-family: Roboto, "Helvetica Neue", sans-serif; }
+
+@media only screen and (max-width: 768px) {
+  .only-xs {
+    display: unset;
+  }
+
+  .only-lg {
+    display: none  !important;
+  }
+}

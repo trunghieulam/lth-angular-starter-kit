@@ -1,0 +1,42 @@
+<div class="header-container">
+  <nav class="navbar navbar-light navbar-expand-md">
+    <a class="navbar-brand" (click)="handleNavigateByUrl('/')">HOME</a>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#headingMenu" aria-controls="headingMenu" aria-expanded="false" aria-label="Toggle navigation" (click)="isCollapsed = !isCollapsed">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+    <div class="collapse navbar-collapse" id="headingMenu" [ngbCollapse]="isCollapsed">
+      <ul class="navbar-nav">
+        <li *ngIf="isLoged" class="nav-item only-xs">
+          <div class="user-container row mg-0">
+            <div class="user-name">
+              <!-- {{ accountInfo.accountName }} -->
+            </div>
+          </div>
+        </li>
+        <div class="break-line only-xs"></div>
+        <li class="nav-item">
+          <a class="nav-link" (click)="handleNavigateByUrl('/about', false)">About</a>
+        </li>
+        <div class="spacing-1 only-xs"></div>
+      </ul>
+      <div *ngIf="isLoged" class="user-container-lg">
+        <div ngbDropdown class="d-inline-block">
+          <button
+            class="user-button btn"
+            ngbDropdownToggle>
+            <div class="user-container row mg-0">
+              <div class="user-name">
+                <!-- {{ accountInfo.accountName }} -->
+              </div>
+            </div>
+          </button>
+          <div class="dropdown-container" ngbDropdownMenu>
+            <button *ngIf="isLoged" type="button" class="btn btn-transparent" (click)="logout()">Log Out</button>
+          </div>
+        </div>
+      </div>
+      <button *ngIf="!isLoged" type="button" class="btn btn-outline-primary" (click)="login()">Log In</button>
+      <button *ngIf="isLoged" type="button" class="btn btn-outline-primary only-xs" (click)="logout()">Log Out</button>
+    </div>
+  </nav>
+</div>

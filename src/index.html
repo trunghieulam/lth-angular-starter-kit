@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <title>LTH Angular Starter Kit</title>
+  <base href="/">
+
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- <link rel="icon" type="image/x-icon" href="__logo__"> -->
+
+  <link href="https://fonts.googleapis.com/css?family=Muli" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+  <script src="https://sdk.accountkit.com/en_US/sdk.js"></script>
+
+  <meta name="description" content="__description__">
+  <meta name="author" content="__author__">
+  <link rel="canonical" href="__link__" />
+
+  <meta property="og:url" content="__link__">
+  <meta property="og:type" content="article" />
+  <!-- <meta property="og:image" content="__logo__"> -->
+  <meta property="og:description" content="__description__">
+  <meta property="og:title" content="__title__">
+  <meta property="og:site_name" content="__sitename__">
+  <meta property="og:see_also" content="__link__">
+
+  <meta itemprop="name" content="__title__">
+  <meta itemprop="description" content="__description__">
+  <!-- <meta itemprop="image" content="__logo__"> -->
+
+  <meta name="twitter:card" content="summary">
+  <meta name="twitter:url" content="__link__">
+  <meta name="twitter:title" content="__title__">
+  <meta name="twitter:description" content="__description__">
+  <!-- <meta name="twitter:image" content="__logo__"> -->
+</head>
+<body>
+  <script>
+    AccountKit_OnInteractive = function(){
+      AccountKit.init(
+        {
+          appId: "298635490806148",
+          state: "csrf",
+          version: "v3.1",
+          fbAppEventsEnabled:true,
+          redirect: "locahost:4200"
+        }
+      );
+    }
+  </script>
+
+  <app-root></app-root>
+</body>
+</html>
