@@ -8,6 +8,7 @@ import { Component } from '@angular/core';
 export class AppComponent {
   title = 'lth-angular-starter-kit';
   childsLoadDone:boolean = false;
+  hasHeader: boolean = true;
 
   constructor() { }
 
@@ -19,5 +20,13 @@ export class AppComponent {
         this.childsLoadDone = true;
       }
     )
+  }
+
+  onActivate(event: any = {}) {
+    this.hasHeader = event.hasHeader;
+  }
+
+  onDeactivate(event) {
+    this.hasHeader = true;
   }
 }

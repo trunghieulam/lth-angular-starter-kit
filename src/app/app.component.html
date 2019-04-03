@@ -3,5 +3,7 @@
   waiting...
 </div>
 
-<app-header></app-header>
-<router-outlet></router-outlet>
+<app-header *ngIf="hasHeader"></app-header>
+<router-outlet
+  (activate)='onActivate($event)'
+  (deactivate)='onDeactivate($event)'></router-outlet>
