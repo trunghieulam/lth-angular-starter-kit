@@ -5,12 +5,12 @@
 export const environment = {
   production: false,
   firebase: {
-    apiKey: 'AIzaSyA6IU-MmG-aFcIJup3jycZSpVsPOm2O69k',
-    authDomain: 'elottery-a1438.firebaseapp.com',
-    databaseURL: 'https://elottery-a1438.firebaseio.com',
-    projectId: 'elottery-a1438',
-    storageBucket: 'elottery-a1438.appspot.com',
-    messagingSenderId: '107318524180'
+    apiKey: 'AIzaSyDnGq_NZ60497AQuE9GWvGg8RpVQbG7SUE',
+    authDomain: 'lth-starter-kit.firebaseapp.com',
+    databaseURL: 'https://lth-starter-kit.firebaseio.com',
+    projectId: 'lth-starter-kit',
+    storageBucket: 'lth-starter-kit.appspot.com',
+    messagingSenderId: '830681468056'
   },
   serverUrl: 'http://localhost:{{port}}'
 };
