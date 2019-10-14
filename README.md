@@ -1,12 +1,12 @@
 # LTH Angular Starter Kit
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 7.3.5. <br />
+This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.5. <br />
 
 Angular Starter Kit with Google Firebase Authentication, inspired by Ngx Starter Kit but faster by just using Angular core and lazy-load.
 
 ## Development server
 
-Run `npm run start` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
+Run `npm run start` for a dev server. Navigate to `http://localhost:7749/`. The app will automatically reload if you change any of the source files.
 
 ## Code scaffolding
 
