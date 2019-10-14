@@ -6,14 +6,14 @@ import { CacheInterceptor } from './cache.interceptor';
 import { HttpCacheService } from './http-cache.service';
 
 describe('CacheInterceptor', () => {
-  let interceptorOptions: Object | null = {};
+  let interceptorOptions: object | null = {};
   let httpCacheService: HttpCacheService;
   let cacheInterceptor: CacheInterceptor;
   let http: HttpClient;
   let httpMock: HttpTestingController;
 
-  function createInterceptor(_httpCacheService: HttpCacheService) {
-    cacheInterceptor = new CacheInterceptor(_httpCacheService).configure(interceptorOptions);
+  function createInterceptor(implicitHttpCacheService: HttpCacheService) {
+    cacheInterceptor = new CacheInterceptor(implicitHttpCacheService).configure(interceptorOptions);
     return cacheInterceptor;
   }
 
@@ -44,10 +44,10 @@ describe('CacheInterceptor', () => {
 
     beforeEach(inject(
       [HttpClient, HttpTestingController, HttpCacheService],
-      (_http: HttpClient, _httpMock: HttpTestingController, _httpCacheService: HttpCacheService) => {
-        http = _http;
-        httpMock = _httpMock;
-        httpCacheService = _httpCacheService;
+      (clientHttp: HttpClient, testHttpMock: HttpTestingController, implicitHttpCacheService: HttpCacheService) => {
+        http = clientHttp;
+        httpMock = testHttpMock;
+        httpCacheService = implicitHttpCacheService;
       }
     ));
 
@@ -100,10 +100,10 @@ describe('CacheInterceptor', () => {
 
     beforeEach(inject(
       [HttpClient, HttpTestingController, HttpCacheService],
-      (_http: HttpClient, _httpMock: HttpTestingController, _httpCacheService: HttpCacheService) => {
-        http = _http;
-        httpMock = _httpMock;
-        httpCacheService = _httpCacheService;
+      (clientHttp: HttpClient, testHttpMock: HttpTestingController, implicitHttpCacheService: HttpCacheService) => {
+        http = clientHttp;
+        httpMock = testHttpMock;
+        httpCacheService = implicitHttpCacheService;
       }
     ));
 

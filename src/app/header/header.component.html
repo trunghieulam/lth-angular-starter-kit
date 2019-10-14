@@ -13,7 +13,7 @@
             </div>
           </div>
         </li>
-        <div class="break-line only-xs"></div>
+        <div *ngIf="isLoged" class="break-line only-xs"></div>
         <li class="nav-item">
           <a class="nav-link" (click)="handleNavigateByUrl('/about', false)">About</a>
         </li>

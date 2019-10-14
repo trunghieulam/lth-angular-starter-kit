@@ -31,10 +31,10 @@ describe('HttpService', () => {
 
   beforeEach(inject(
     [HttpClient, HttpTestingController, HttpCacheService],
-    (_http: HttpClient, _httpMock: HttpTestingController, _httpCacheService: HttpCacheService) => {
-      http = _http;
-      httpMock = _httpMock;
-      httpCacheService = _httpCacheService;
+    (clientHttp: HttpClient, testHttpMock: HttpTestingController, implicitHttpCacheService: HttpCacheService) => {
+      http = clientHttp;
+      httpMock = testHttpMock;
+      httpCacheService = implicitHttpCacheService;
     }
   ));
 

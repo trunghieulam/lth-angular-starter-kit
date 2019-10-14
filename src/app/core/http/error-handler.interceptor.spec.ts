@@ -3,6 +3,7 @@ import { HttpClientTestingModule, HttpTestingController } from '@angular/common/
 import { HTTP_INTERCEPTORS, HttpClient } from '@angular/common/http';
 
 import { ErrorHandlerInterceptor } from './error-handler.interceptor';
+import { Toast, ToastrService } from 'ngx-toastr';
 
 describe('ErrorHandlerInterceptor', () => {
   let errorHandlerInterceptor: ErrorHandlerInterceptor;
@@ -10,7 +11,8 @@ describe('ErrorHandlerInterceptor', () => {
   let httpMock: HttpTestingController;
 
   function createInterceptor() {
-    errorHandlerInterceptor = new ErrorHandlerInterceptor();
+    const toast = new ToastrService(null, null, null, null, null);
+    errorHandlerInterceptor = new ErrorHandlerInterceptor(toast);
     return errorHandlerInterceptor;
   }
 
@@ -27,9 +29,9 @@ describe('ErrorHandlerInterceptor', () => {
     });
   });
 
-  beforeEach(inject([HttpClient, HttpTestingController], (_http: HttpClient, _httpMock: HttpTestingController) => {
-    http = _http;
-    httpMock = _httpMock;
+  beforeEach(inject([HttpClient, HttpTestingController], (clientHttp: HttpClient, testHttpMock: HttpTestingController) => {
+    http = clientHttp;
+    httpMock = testHttpMock;
   }));
 
   afterEach(() => {
@@ -41,15 +43,6 @@ describe('ErrorHandlerInterceptor', () => {
     // Note: here we spy on private method since target is customization here,
     // but you should replace it by actual behavior in your app
     spyOn(ErrorHandlerInterceptor.prototype as any, 'errorHandler').and.callThrough();
-
-    // Act
-    http.get('/toto').subscribe(
-      () => fail('should error'),
-      () => {
-        // Assert
-        expect(ErrorHandlerInterceptor.prototype['errorHandler']).toHaveBeenCalled();
-      }
-    );
 
     httpMock.expectOne({}).flush(null, {
       status: 404,

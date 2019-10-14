@@ -22,9 +22,9 @@ describe('ApiPrefixInterceptor', () => {
     });
   });
 
-  beforeEach(inject([HttpClient, HttpTestingController], (_http: HttpClient, _httpMock: HttpTestingController) => {
-    http = _http;
-    httpMock = _httpMock;
+  beforeEach(inject([HttpClient, HttpTestingController], (clientHttp: HttpClient, testHttpMock: HttpTestingController) => {
+    http = clientHttp;
+    httpMock = testHttpMock;
   }));
 
   afterEach(() => {

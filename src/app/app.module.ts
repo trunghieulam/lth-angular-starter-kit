@@ -14,11 +14,13 @@ import { environment } from 'src/environments/environment';
 import { HttpClientModule } from '@angular/common/http';
 import { CoreModule } from './core';
 import { ToastrModule } from 'ngx-toastr';
+import { LoginDialogComponent } from './header/login-dialog/login-dialog.component';
 
 @NgModule({
   declarations: [
     AppComponent,
-    HeaderComponent
+    HeaderComponent,
+    LoginDialogComponent
   ],
   imports: [
     BrowserModule,
@@ -26,7 +28,7 @@ import { ToastrModule } from 'ngx-toastr';
     BrowserAnimationsModule,
     AppRoutingModule,
     FormsModule,
-    NgbModule.forRoot(),
+    NgbModule,
     AngularFireDatabaseModule,
     AngularFireAuthModule,
     HttpClientModule,
@@ -36,6 +38,9 @@ import { ToastrModule } from 'ngx-toastr';
       positionClass: 'toast-bottom-right',
       preventDuplicates: true,
     }),
+  ],
+  entryComponents: [
+    LoginDialogComponent
   ],
   bootstrap: [AppComponent]
 })

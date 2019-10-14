@@ -25,9 +25,9 @@ describe('AuthenticationGuard', () => {
 
   beforeEach(inject(
     [AuthenticationGuard, AuthenticationService],
-    (_authenticationGuard: AuthenticationGuard, _authenticationService: MockAuthenticationService) => {
-      authenticationGuard = _authenticationGuard;
-      authenticationService = _authenticationService;
+    (guardAuthenticationGuard: AuthenticationGuard, mockAuthenticationService: MockAuthenticationService) => {
+      authenticationGuard = guardAuthenticationGuard;
+      authenticationService = mockAuthenticationService;
     }
   ));
 

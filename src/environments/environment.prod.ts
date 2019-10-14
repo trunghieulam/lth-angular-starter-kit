@@ -3,7 +3,7 @@ export const environment = {
   firebase: {
     apiKey: 'AIzaSyDnGq_NZ60497AQuE9GWvGg8RpVQbG7SUE',
     authDomain: 'lth-starter-kit.firebaseapp.com',
-    databaseURL: 'https://lth-starter-kit.firebaseio.com',
+    databaseURL: 'https://elottery-a1438.firebaseio.com',
     projectId: 'lth-starter-kit',
     storageBucket: 'lth-starter-kit.appspot.com',
     messagingSenderId: '830681468056'

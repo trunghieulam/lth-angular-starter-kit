@@ -12,7 +12,7 @@ const proxyConfig = [
   {
     context: '/api',
     pathRewrite: { '^/api': '' },
-    target: '{{api_server_address}}',
+    target: 'https://lotteryhouse-api.elefos.io',
     changeOrigin: true,
     secure: false
   }

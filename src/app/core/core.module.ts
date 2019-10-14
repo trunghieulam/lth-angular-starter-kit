@@ -11,11 +11,13 @@ import { ApiPrefixInterceptor } from './http/api-prefix.interceptor';
 import { ErrorHandlerInterceptor } from './http/error-handler.interceptor';
 import { CacheInterceptor } from './http/cache.interceptor';
 import { ApiAuthorizationInterceptor } from './http/api-authorization.interceptor';
+import { CredentialsService } from './authentication/credentials.service';
 
 @NgModule({
   imports: [CommonModule, HttpClientModule, RouterModule],
   providers: [
     AuthenticationService,
+    CredentialsService,
     AuthenticationGuard,
     HttpCacheService,
     ApiPrefixInterceptor,

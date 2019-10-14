@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../core';
+import { AuthenticationService, LoginStatus } from '../core';
 import { Router } from '@angular/router';
 import { UserService } from '../services/user.service';
 import { UserInfo } from 'firebase/app';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
+import { LoginDialogComponent } from './login-dialog/login-dialog.component';
+import { ToastrService } from 'ngx-toastr';
 
 @Component({
   selector: 'app-header',
@@ -10,12 +13,15 @@ import { UserInfo } from 'firebase/app';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  isCollapsed: boolean = true;
+  isCollapsed = true;
   userInfo: UserInfo;
+  loginDialog: NgbModalRef;
 
   constructor(
+    private toastr: ToastrService,
     private router: Router,
     private authenticationService: AuthenticationService,
+    private modalService: NgbModal,
     private userService: UserService
   ) {
     this.userService.userInfo.subscribe(
@@ -27,12 +33,37 @@ export class HeaderComponent implements OnInit {
   }
 
   login() {
-    this.authenticationService.login();
+    this.openLoginDialog();
   }
 
   logout() {
     this.authenticationService.logout().subscribe();
-    // this.handleUnauthenticatedUrl();
+  }
+
+  openLoginDialog() {
+    const className = 'alert-login-modal';
+    this.loginDialog = this.modalService.open(LoginDialogComponent, {
+      windowClass: className,
+      ariaLabelledBy: 'modal-basic-title',
+      backdropClass: 'black-transparent-backdrop'
+    });
+    this.loginDialog.componentInstance.callLogin.subscribe(
+      (response) => {
+        if (response) {
+          this.authenticationService.login().subscribe(
+            (shouldClose: boolean) => {
+              if (shouldClose) {
+                this.loginDialog.close();
+              } else {
+                this.toastr.success('Login Failed!', 'Authentication');
+              }
+            }
+          );
+        } else {
+          this.loginDialog.close();
+        }
+      }
+    );
   }
 
   handleUnauthenticatedUrl() {
@@ -50,6 +81,6 @@ export class HeaderComponent implements OnInit {
   }
 
   get isLoged() {
-    return this.authenticationService.isAuthenticated();
+    return this.authenticationService.loginStatus !== LoginStatus.signout;
   }
 }

@@ -14,11 +14,6 @@ export class CacheInterceptor implements HttpInterceptor {
 
   constructor(private httpCacheService: HttpCacheService) {}
 
-  /**
-   * Configures interceptor options
-   * @param {{update: boolean}} options If update option is enabled, forces request to be made and updates cache entry.
-   * @return {CacheInterceptor} The configured instance.
-   */
   configure(options?: { update?: boolean } | null): CacheInterceptor {
     const instance = new CacheInterceptor(this.httpCacheService);
     if (options && options.update) {
@@ -36,7 +31,7 @@ export class CacheInterceptor implements HttpInterceptor {
       const cachedData = this.forceUpdate ? null : this.httpCacheService.getCacheData(request.urlWithParams);
       if (cachedData !== null) {
         // Create new response to avoid side-effects
-        subscriber.next(new HttpResponse(cachedData as Object));
+        subscriber.next(new HttpResponse(cachedData as object));
         subscriber.complete();
       } else {
         next.handle(request).subscribe(

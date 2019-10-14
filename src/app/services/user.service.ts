@@ -7,7 +7,7 @@ import { UserInfo } from 'firebase/app';
   providedIn: 'root'
 })
 export class UserService {
-  private _userInfo: BehaviorSubject<UserInfo> = new BehaviorSubject<UserInfo>({
+  private implicitUserInfo: BehaviorSubject<UserInfo> = new BehaviorSubject<UserInfo>({
     displayName: '',
     email: '',
     phoneNumber: '',
@@ -15,15 +15,24 @@ export class UserService {
     providerId: '',
     uid: '',
   });
-  public readonly userInfo: Observable<UserInfo> = this._userInfo.asObservable();
+  public readonly userInfo: Observable<UserInfo> = this.implicitUserInfo.asObservable();
 
   constructor(
     public afAuth: AngularFireAuth
   ) {
+  }
+
+  updateUserInfo() {
+
+    // you should use the service server database to get userinfo instead of using firbase userinfo
     this.afAuth.user.subscribe(
       user => {
-        if (user) this._userInfo.next(user);
+        if (user) { this.implicitUserInfo.next(user); }
       }
-    )
+    );
+  }
+
+  clearUserInfo() {
+    this.implicitUserInfo.next(null);
   }
 }

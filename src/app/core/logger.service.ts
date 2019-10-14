@@ -74,6 +74,7 @@ export class Logger {
    * Works the same as console.log().
    */
   debug(...objects: any[]) {
+    /* tslint:disable */
     this.log(console.log, LogLevel.Debug, objects);
   }
 
@@ -99,9 +100,10 @@ export class Logger {
    */
   error(...objects: any[]) {
     this.log(console.error, LogLevel.Error, objects);
+    /* tslint:enable */
   }
 
-  private log(func: Function, level: LogLevel, objects: any[]) {
+  private log(func: () => void, level: LogLevel, objects: any[]) {
     if (level <= Logger.level) {
       const log = this.source ? ['[' + this.source + ']'].concat(objects) : objects;
       func.apply(console, log);

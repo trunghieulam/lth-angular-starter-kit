@@ -10,20 +10,20 @@ const credentialsKey = 'credentials';
  */
 @Injectable()
 export class ApiAuthorizationInterceptor implements HttpInterceptor {
-  private _credentials: Credentials | null;
+  private implicitCredentials: Credentials | null;
 
   constructor() {}
 
   intercept(request: HttpRequest<any>, next: HttpHandler): Observable<HttpEvent<any>> {
     const savedCredentials = sessionStorage.getItem(credentialsKey) || localStorage.getItem(credentialsKey);
     if (savedCredentials) {
-      this._credentials = JSON.parse(savedCredentials);
+      this.implicitCredentials = JSON.parse(savedCredentials);
     } else {
-      this._credentials = new Credentials();
+      this.implicitCredentials = new Credentials();
     }
 
-    let authorizationHeader = new HttpHeaders({
-      Authorization: `Bearer ${this._credentials.accessToken}`
+    const authorizationHeader = new HttpHeaders({
+      Authorization: `Bearer ${this.implicitCredentials.accessToken}`
     });
 
     // Add Authorization Header

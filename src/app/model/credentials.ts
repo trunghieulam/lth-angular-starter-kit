@@ -5,3 +5,10 @@ export class Credentials {
   providerId: string;
   signInMethod: string;
 }
+
+export class FirebaseCredentials {
+  oauthAccessToken: string;
+  oauthIdToken: string;
+  providerId: string;
+  signInMethod: string;
+}

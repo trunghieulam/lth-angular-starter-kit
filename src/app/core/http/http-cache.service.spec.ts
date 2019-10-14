@@ -19,8 +19,8 @@ describe('HttpCacheService', () => {
     window.localStorage.removeItem(cachePersistenceKey);
   });
 
-  beforeEach(inject([HttpCacheService], (_httpCacheService: HttpCacheService) => {
-    httpCacheService = _httpCacheService;
+  beforeEach(inject([HttpCacheService], (implicitHttpCacheService: HttpCacheService) => {
+    httpCacheService = implicitHttpCacheService;
 
     response = new HttpResponse({ body: 'data' });
   }));
@@ -57,8 +57,8 @@ describe('HttpCacheService', () => {
       httpCacheService.setCacheData('/hoho', response);
 
       // Assert
-      expect((<HttpCacheEntry>httpCacheService.getHttpCacheEntry('/popo')).lastUpdated).toBe(date);
-      expect((<HttpCacheEntry>httpCacheService.getHttpCacheEntry('/hoho')).lastUpdated).not.toBe(date);
+      expect((httpCacheService.getHttpCacheEntry('/popo') as HttpCacheEntry).lastUpdated).toBe(date);
+      expect((httpCacheService.getHttpCacheEntry('/hoho') as HttpCacheEntry).lastUpdated).not.toBe(date);
     });
   });
 
@@ -99,8 +99,8 @@ describe('HttpCacheService', () => {
 
       // Assert
       expect(entry).not.toBeNull();
-      expect((<HttpCacheEntry>entry).lastUpdated).toEqual(date);
-      expect((<HttpCacheEntry>entry).data).toEqual(response);
+      expect((entry as HttpCacheEntry).lastUpdated).toEqual(date);
+      expect((entry as HttpCacheEntry).data).toEqual(response);
     });
   });
 
