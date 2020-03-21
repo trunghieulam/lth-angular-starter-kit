@@ -1,9 +1,7 @@
-<!--The content below is only a placeholder and can be replaced.-->
-<div *ngIf="!childsLoadDone" style="text-align:center">
-  waiting...
-</div>
+<app-header [ngClass]="{'app-hidden': !hasHeader}"></app-header>
 
-<app-header *ngIf="hasHeader"></app-header>
 <router-outlet
   (activate)='onActivate($event)'
   (deactivate)='onDeactivate($event)'></router-outlet>
+
+<app-footer [ngClass]="{'app-hidden': !hasFooter}"></app-footer>

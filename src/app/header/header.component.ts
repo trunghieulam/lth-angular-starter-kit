@@ -1,11 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { AuthenticationService, LoginStatus } from '../core';
-import { Router } from '@angular/router';
-import { UserService } from '../services/user.service';
-import { UserInfo } from 'firebase/app';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { LoginDialogComponent } from './login-dialog/login-dialog.component';
-import { ToastrService } from 'ngx-toastr';
+import { TranslateService } from '@ngx-translate/core';
 
 @Component({
   selector: 'app-header',
@@ -13,74 +7,56 @@ import { ToastrService } from 'ngx-toastr';
   styleUrls: ['./header.component.scss']
 })
 export class HeaderComponent implements OnInit {
-  isCollapsed = true;
-  userInfo: UserInfo;
-  loginDialog: NgbModalRef;
+
+  DEFAUL_EN = {
+    code: 'en',
+    name: 'lang.en',
+    flagUrl: '../../assets/imgs/flags/en.svg'
+  }
+
+  selectedLanguage: any;
+
+  languages = [{
+    code: 'en',
+    name: 'lang.en',
+    flagUrl: '../../assets/imgs/flags/en.svg'
+  }, {
+    code: 'vi',
+    name: 'lang.vi',
+    flagUrl: '../../assets/imgs/flags/vi.svg'
+  }, {
+    code: 'no',
+    name: 'lang.no',
+    flagUrl: '../../assets/imgs/flags/no.svg'
+  }];
 
   constructor(
-    private toastr: ToastrService,
-    private router: Router,
-    private authenticationService: AuthenticationService,
-    private modalService: NgbModal,
-    private userService: UserService
+    private translateService: TranslateService
   ) {
-    this.userService.userInfo.subscribe(
-      userInfo => this.userInfo = userInfo
-    );
-  }
-
-  ngOnInit() {
-  }
-
-  login() {
-    this.openLoginDialog();
-  }
-
-  logout() {
-    this.authenticationService.logout().subscribe();
-  }
-
-  openLoginDialog() {
-    const className = 'alert-login-modal';
-    this.loginDialog = this.modalService.open(LoginDialogComponent, {
-      windowClass: className,
-      ariaLabelledBy: 'modal-basic-title',
-      backdropClass: 'black-transparent-backdrop'
-    });
-    this.loginDialog.componentInstance.callLogin.subscribe(
-      (response) => {
-        if (response) {
-          this.authenticationService.login().subscribe(
-            (shouldClose: boolean) => {
-              if (shouldClose) {
-                this.loginDialog.close();
-              } else {
-                this.toastr.success('Login Failed!', 'Authentication');
-              }
-            }
-          );
-        } else {
-          this.loginDialog.close();
-        }
+    let language = localStorage.getItem('language');
+    if (language) {
+      let userLanguage = this.languages.filter(
+        x => x.code == language
+      );
+      if (userLanguage.length > 0) {
+        this.selectedLanguage = userLanguage[0];
+        this.changeLanguage(this.selectedLanguage);
       }
-    );
-  }
-
-  handleUnauthenticatedUrl() {
-    location.reload();
-  }
-
-  handleNavigateByUrl(url: string, needAuthen: boolean = false) {
-    if (needAuthen) {
-      if (!this.isLoged) {
-        this.login();
-      }
+    } else {
+      this.selectedLanguage = this.DEFAUL_EN;
+      localStorage.setItem('language', this.selectedLanguage.code);
     }
-    this.router.navigateByUrl(url);
-    this.isCollapsed = true;
   }
 
-  get isLoged() {
-    return this.authenticationService.loginStatus !== LoginStatus.signout;
+  ngOnInit(): void {
+  }
+
+  changeLanguage(language: any) {
+    if (!language) {
+      language = this.DEFAUL_EN;
+    }
+    this.selectedLanguage = language;
+    localStorage.setItem('language', language.code);
+    this.translateService.use(language.code);
   }
 }
